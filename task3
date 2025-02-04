@@ -1,0 +1,20 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+df_car = pd.read_csv("https://raw.githubusercontent.com/amankharwal/Website-data/master/CarPrice.csv")
+X_car = df_car.drop(columns=["price"])
+y_car = df_car["price"]
+X_train, X_test, y_train, y_test = train_test_split(X_car, y_car, test_size=0.2, random_state=42)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+from sklearn.linear_model import LinearRegression
+model_car = LinearRegression()
+model_car.fit(X_train, y_train)
+y_pred = model_car.predict(X_test)
+print("Car Price Prediction Model Score:", model_car.score(X_test, y_test))
